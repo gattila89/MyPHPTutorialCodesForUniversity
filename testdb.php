@@ -14,5 +14,5 @@
         echo $e->error_get_last;
     }
     echo '<br>';
-    echo '<a href="index.php">Vissza</a>';
+    echo '<a href="index.html">Vissza</a>';
 ?>
