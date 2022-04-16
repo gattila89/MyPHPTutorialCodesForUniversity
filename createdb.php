@@ -13,6 +13,13 @@
         echo '<br>';
         echo $e->error_get_last;
     }
+
+    $sql = "CREATE DATABASE IF NOT EXISTS iwyrwv_testdb";
+    $conn->query($sql);
+    echo '<br>';
+    echo 'Adatbazis letrehozva';
+
+
     echo '<br>';
     echo '<a href="index.php">Vissza</a>';
 ?>
