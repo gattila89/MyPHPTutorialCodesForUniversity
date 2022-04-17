@@ -5,8 +5,17 @@
     if(isset($_GET['delete_id']))
     {
         $sql_query="DELETE FROM Vevok WHERE VevoID=".$_GET['delete_id'];
-        $conn->query($sql_query);
-        header("Location: usersList.php");
+        try 
+        {
+            mysqli_query($conn, $sql_query);
+            header("Location: usersList.php");
+        } 
+        catch(Exception)
+        {
+            echo "Törles nem sikerül, mert a vevöre masik tablaban hivatkozas van";
+            echo "<br><a href='usersList.php'>Vissza</a>";
+            exit;
+        }
     }
 ?>
 
