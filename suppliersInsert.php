@@ -5,11 +5,11 @@ if(isset($_POST['submit']))
      $name = $_POST['nev'];
      $email = $_POST['email'];
      $telefon = $_POST['telefon'];
-     $cim = $_POST['cim'];
-     $sql = "INSERT INTO Vevok (nev,email,telefon,cim) VALUES ('$name','$email','$telefon','$cim')";
+     $cim = $_POST['szekhely'];
+     $sql = "INSERT INTO Beszallitok (nev,email,telefon,szekhely) VALUES ('$name','$email','$telefon','$cim')";
      if (mysqli_query($conn, $sql)) 
      {
-      header("Location: usersList.php");
+      header("Location: suppliersList.php");
      } 
      else 
      {

@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <form action="usersInsert.php" method="post">
+    <form action="suppliersInsert.php" method="post">
         <div class="form-group">
             <label>Nev</label>
             <input type="text" name="nev" class="form-control">
@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label>Cim</label>
-            <input type="text" name="cim" class="form-control">
+            <input type="text" name="szekhely" class="form-control">
         </div>
         <input type="submit" class="btn btn-primary" name="submit" value="Hozzaad">
     </form>
