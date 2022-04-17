@@ -23,6 +23,17 @@
     $sql = "use iwyrwv_testdb";
     $conn->query($sql);
 
+    $sql = "DROP TABLE IF EXISTS Vevok";
+    $conn->query($sql);
+    $sql = "DROP TABLE IF EXISTS Beszallitok";
+    $conn->query($sql);
+    $sql = "DROP TABLE IF EXISTS Term_szolg";
+    $conn->query($sql);
+    $sql = "DROP TABLE IF EXISTS Szamlak";
+    $conn->query($sql);
+    $sql = "DROP TABLE IF EXISTS Rendelesek";
+    $conn->query($sql);
+
     $sql = "CREATE TABLE IF NOT EXISTS Vevok(";
     $sql .= "VevoID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "nev VARCHAR(50),";
