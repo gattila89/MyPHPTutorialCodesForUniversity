@@ -13,6 +13,8 @@
         echo '<br>';
         echo $e->error_get_last;
     }
+
+    $conn->close();
     echo '<br>';
     echo '<a href="index.html">Vissza</a>';
 ?>

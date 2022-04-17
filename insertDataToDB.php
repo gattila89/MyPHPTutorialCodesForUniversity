@@ -126,6 +126,8 @@
     $sql = "INSERT INTO Rendelesek (Term_szolgID, SzamlaID, Mennyiseg) VALUES (5, 2, 1)";
     $conn->query($sql);
 
+    $conn->close();
+    
     echo '<br>';
     echo 'Rendelesek beillesztve';
 
