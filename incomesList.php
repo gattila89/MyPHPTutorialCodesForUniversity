@@ -1,28 +1,19 @@
 <?php
     $conn = new mysqli("localhost", "root", "", "iwyrwv_testdb");
-    $sql_query="
-    SELECT v.*, Sum(IFNULL(a.RendelesOsszAr, 0)) AS Forgalom  FROM vevok v
-    LEFT JOIN (
-        SELECT 
-        s.VevoID, r.Mennyiseg, r.Term_szolgID, s.SzamlaID,t.nev, t.egysegar, t.isSzolgaltatas, 
-        (t.egysegar*r.Mennyiseg) AS RendelesOsszAr FROM rendelesek r 
-        INNER JOIN szamlak s ON r.SzamlaID=s.SzamlaID
-        INNER JOIN term_szolg t ON t.Term_szolgID=r.Term_szolgID
-    )a ON v.VevoID = a.VevoID
-    GROUP BY VevoID";
+    $sql_query="SELECT r.RendelesekID, r.SzamlaID, t.nev, r.Mennyiseg FROM `rendelesek` r INNER JOIN term_szolg t ON r.Term_szolgID=t.Term_szolgID";
     $result_set=$conn->query($sql_query);
     if(isset($_GET['delete_id']))
     {
-        $sql_query="DELETE FROM Vevok WHERE VevoID=".$_GET['delete_id'];
+        $sql_query="DELETE FROM Rendelesek WHERE RendelesekID=".$_GET['delete_id'];
         try 
         {
             mysqli_query($conn, $sql_query);
-            header("Location: usersList.php");
+            header("Location: incomesList.php");
         } 
         catch(Exception)
         {
-            echo "Törles nem sikerül, mert a vevöre masik tablaban hivatkozas van";
-            echo "<br><a href='usersList.php'>Vissza</a>";
+            echo "Törles nem sikerül, mert a bevetelre masik tablaban hivatkozas van";
+            echo "<br><a href='incomesList.php'>Vissza</a>";
             exit;
         }
     }
@@ -37,9 +28,9 @@
     
     function delete_id(id)
     {
-        if(confirm('Biztosan törölni akarod a vevöt?'))
+        if(confirm('Biztosan törölni akarod a rendelest?'))
         {
-            window.location.href='usersList.php?delete_id='+id;
+            window.location.href='incomesList.php?delete_id='+id;
         }
     }
 
@@ -50,12 +41,9 @@
     <table class="table">
     <tr>
         <th>Azonosito</th>
-        <th>Nev</th>
-        <th>Email</th>
-        <th>Telefon</th>
-        <th>Cim</th>
-        <th>Forgalom</th>
-        <th colspan="2">Müveletek</th>
+        <th>Szamla ID</th>
+        <th>Termek neve</th>
+        <th>Mennyiseg</th>
     </tr>
 
     <?php
@@ -70,10 +58,6 @@
                 <td><?php echo $row[1]; ?></td>
                 <td><?php echo $row[2]; ?></td>
                 <td><?php echo $row[3]; ?></td>
-                <td><?php echo $row[4]; ?></td>
-                <td><?php echo $row[5]; ?></td>
-                <td><a href="usersEdit.php?id=<?php echo $row[0];?>">Szerkeszt</a></td>
-                <td><a href="javascript:delete_id(<?php echo $row[0]; ?>)">Töröl</a></td>
             </tr>
 
             <?php
@@ -84,7 +68,7 @@
         ?>
 
         <tr>
-        <th colspan="4">Nem talalhato Vevö az adatbazisban</th>
+        <th colspan="4">Nem talalhato Rendeles az adatbazisban</th>
         </tr>
 
         <?php
@@ -93,7 +77,7 @@
     </table>
 
     <br>
-    <a href="usersAdd.php" class="btn btn-primary">Uj Vevo hozzaadasa</a>
+    <a href="incomesAdd.php" class="btn btn-primary">Uj Rendeles tetel hozzaadasa</a>
     <a href="index.html" class="btn btn-primary">Vissza</a>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
