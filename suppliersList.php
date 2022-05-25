@@ -1,6 +1,15 @@
 <?php
     $conn = new mysqli("localhost", "root", "", "iwyrwv_testdb");
-    $sql_query="SELECT * FROM Beszallitok";
+    $sql_query="
+    SELECT b.*, Sum(IFNULL(a.RendelesOsszAr, 0)) AS Forgalom  FROM beszallitok b
+    LEFT JOIN (
+        SELECT 
+        t.BeszallitoID, r.Mennyiseg, r.Term_szolgID, s.SzamlaID,t.nev, t.egysegar, t.isSzolgaltatas, 
+        (t.egysegar*r.Mennyiseg) AS RendelesOsszAr FROM rendelesek r 
+        INNER JOIN szamlak s ON r.SzamlaID=s.SzamlaID
+        INNER JOIN term_szolg t ON t.Term_szolgID=r.Term_szolgID
+    )a ON b.BeszallitoID = a.BeszallitoID
+    GROUP BY BeszallitoID";
     $result_set=$conn->query($sql_query);
     if(isset($_GET['delete_id']))
     {
@@ -45,6 +54,7 @@
         <th>Email</th>
         <th>Telefon</th>
         <th>Szekhely</th>
+        <th>Forgalom</th>
         <th colspan="2">Müveletek</th>
     </tr>
 
@@ -61,6 +71,7 @@
                 <td><?php echo $row[2]; ?></td>
                 <td><?php echo $row[3]; ?></td>
                 <td><?php echo $row[4]; ?></td>
+                <td><?php echo $row[5]; ?></td>
                 <td><a href="suppliersEdit.php?id=<?php echo $row[0];?>">Szerkeszt</a></td>
                 <td><a href="javascript:delete_id(<?php echo $row[0]; ?>)">Töröl</a></td>
             </tr>
