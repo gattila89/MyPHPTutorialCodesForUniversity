@@ -111,6 +111,40 @@
         echo $th->error_get_last;
     }
 
+    $sql = "CREATE TABLE IF NOT EXISTS Naplo(";
+    $sql .= "NaploID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
+    $sql .= "Muvelet VARCHAR(50),";
+    $sql .= "Datum TIMESTAMP,";
+    $sql .= "Tabla VARCHAR(50))";
+
+    try {
+        $conn->query($sql);
+        echo '<br>';
+        echo 'Naplo tabla letrehozva';
+    } catch (Excepreion $th) {
+        echo $th->error_get_last;
+    }
+
+    $sql = "CREATE PROCEDURE `Naplozas`(IN `inpmuvelet` VARCHAR(50), IN `inptabla` VARCHAR(50)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `naplo`(`Muvelet`, `Tabla`) VALUES (inpmuvelet,inpTabla); END";
+
+    try {
+        $conn->query($sql);
+        echo '<br>';
+        echo 'PROCEDURE Naplozas letrehozva';
+    } catch (Excepreion $th) {
+        echo $th->error_get_last;
+    }
+
+    $sql = "DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON vevok FOR EACH ROW BEGIN CALL Naplozas('Insert','vevok',NOW()); END$$ DELIMITER ;";
+
+    try {
+        $conn->query($sql);
+        echo '<br>';
+        echo 'PROCEDURE Naplozas letrehozva';
+    } catch (Excepreion $th) {
+        echo $th->error_get_last;
+    }
+
     $conn->close();
     echo '<br>';
     echo '<a href="index.html">Vissza</a>';
