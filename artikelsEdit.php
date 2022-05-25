@@ -76,6 +76,7 @@
             </select>
         </div>
         <input type="submit" class="btn btn-primary" name="submit" value="Mentes">
+        <a href="artikelsList.php" class="btn btn-primary">Vissza</a>
     </form>
 
 

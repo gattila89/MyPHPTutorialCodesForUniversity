@@ -43,6 +43,7 @@
             <input type="text" name="szekhely" value='<?php echo $cim?>' class="form-control">
         </div>
         <input type="submit" class="btn btn-primary" name="submit" value="Mentes">
+        <a href="suppliersList.php" class="btn btn-primary">Vissza</a>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
