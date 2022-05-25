@@ -72,6 +72,7 @@
                 <td><?php echo $row[3]; ?></td>
                 <td><?php echo $row[4]; ?></td>
                 <td><?php echo $row[5]; ?></td>
+                <td><a href="billsSuppliersList.php?id=<?php echo $row[0];?>">Szamlak</a></td>
                 <td><a href="suppliersEdit.php?id=<?php echo $row[0];?>">Szerkeszt</a></td>
                 <td><a href="javascript:delete_id(<?php echo $row[0]; ?>)">Töröl</a></td>
             </tr>

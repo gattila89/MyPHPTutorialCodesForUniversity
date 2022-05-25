@@ -55,7 +55,7 @@
         <th>Telefon</th>
         <th>Cim</th>
         <th>Forgalom</th>
-        <th colspan="2">Müveletek</th>
+        <th colspan="3" class="text-center">Müveletek</th>
     </tr>
 
     <?php
@@ -72,6 +72,7 @@
                 <td><?php echo $row[3]; ?></td>
                 <td><?php echo $row[4]; ?></td>
                 <td><?php echo $row[5]; ?></td>
+                <td><a href="billsUserList.php?id=<?php echo $row[0];?>">Szamlak</a></td>
                 <td><a href="usersEdit.php?id=<?php echo $row[0];?>">Szerkeszt</a></td>
                 <td><a href="javascript:delete_id(<?php echo $row[0]; ?>)">Töröl</a></td>
             </tr>
