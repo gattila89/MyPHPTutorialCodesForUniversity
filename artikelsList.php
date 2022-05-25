@@ -42,7 +42,7 @@
 
 </head>
 <body>
-    <table>
+    <table class="table">
     <tr>
         <th>Azonosito</th>
         <th>Termek neve</th>

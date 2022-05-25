@@ -38,7 +38,7 @@
 
 </head>
 <body>
-    <table>
+    <table class="table">
     <tr>
         <th>Azonosito</th>
         <th>Nev</th>

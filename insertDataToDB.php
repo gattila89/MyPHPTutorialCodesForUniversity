@@ -121,7 +121,7 @@
     $conn->query($sql);
     $sql = "INSERT INTO Rendelesek (Term_szolgID, SzamlaID, Mennyiseg) VALUES (2, 1, 10)";
     $conn->query($sql);
-    $sql = "INSERT INTO Rendelesek (Term_szolgID, SzamlaID, Mennyiseg) VALUES (4, , 1)";
+    $sql = "INSERT INTO Rendelesek (Term_szolgID, SzamlaID, Mennyiseg) VALUES (4, 2, 1)";
     $conn->query($sql);
     $sql = "INSERT INTO Rendelesek (Term_szolgID, SzamlaID, Mennyiseg) VALUES (5, 2, 1)";
     $conn->query($sql);
