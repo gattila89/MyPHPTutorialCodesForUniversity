@@ -23,19 +23,57 @@ if(isset($_POST['submit'])){
     $row = $result_set->fetch_assoc();
 
     $szid = $row['SzamlaID'];
-
+    $counter = 0;
     foreach($termek AS $key => $value)
     {
-        $query3 = "INSERT INTO `rendelesek`(`Term_szolgID`, `SzamlaID`, `Mennyiseg`) 
-            VALUES ($value,$szid,'" . $conn->real_escape_string($mennyiseg[$key]) . "')";
+        $query4 = "SELECT * FROM term_szolg WHERE Term_SzolgID = $value";
+        $result_q4 = $conn->query($query4);
+        $row_q4 = $result_q4->fetch_assoc();
 
-        $insert = $conn->query($query3);
+        $isSzolgaltatas = $row_q4['isSzolgaltatas'];
+        $tnev = $row_q4['nev'];
+        
+        if(!$isSzolgaltatas)
+        {
+            $osszesMennyiOld = $row_q4['mennyiseg'];
+            $megvettMenny = $conn->real_escape_string($mennyiseg[$key]);
+            if($megvettMenny > $osszesMennyiOld)
+            {
+                echo '<script language="javascript">alert("A '. $tnev . ' - nevü termekbol nincs eleg, ezert nem lesz megrendelve.");</script>';
+            }
+            else
+            {
+                $ujmenny = $osszesMennyiOld - $megvettMenny;
+                $query5 = "UPDATE term_szolg SET mennyiseg = $ujmenny WHERE term_szolgID = $value";
+                $result_q5 = $conn->query($query5);
+
+                $query3 = "INSERT INTO `rendelesek`(`Term_szolgID`, `SzamlaID`, `Mennyiseg`) 
+                VALUES ($value,$szid,'" . $conn->real_escape_string($mennyiseg[$key]) . "')";
+                $insert = $conn->query($query3);
+                $counter++;
+            }
+            
+        }
+        else 
+        {
+            $query3 = "INSERT INTO `rendelesek`(`Term_szolgID`, `SzamlaID`, `Mennyiseg`) 
+            VALUES ($value,$szid,'" . $conn->real_escape_string($mennyiseg[$key]) . "')";
+            $insert = $conn->query($query3);
+            $counter++;
+        }
     }
 
     $conn->close();
 
-    header("Location: billDetails.php?id=$szid");
-    exit();
+    if($counter > 0)
+    {
+        header("Location: billDetails.php?id=$szid");
+        exit();    
+    }
+    else {
+        $query6 = "DELETE * FROM szamlak WHERE szamlaID = $szid";
+        echo '<script language="javascript">alert("A rendeles nem sikerült, mert nincs termek a szamlaban. A szamla törlesre került.");</script>';
+    }
 }
 ?>
 
@@ -111,7 +149,7 @@ if(isset($_POST['submit'])){
 
                     <div class="col">
                     <label>Termek Mennyiseg</label>
-                    <input type="number" id="mennyiseg" name="mennyiseg[]">
+                    <input type="number" id="mennyiseg" name="mennyiseg[]" min="1">
                     </div>
                     <div class="col">
                     <label></label>
