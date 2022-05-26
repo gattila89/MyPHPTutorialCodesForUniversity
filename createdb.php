@@ -23,17 +23,6 @@
     $sql = "use iwyrwv_testdb";
     $conn->query($sql);
 
-    $sql = "DROP TABLE IF EXISTS Vevok";
-    $conn->query($sql);
-    $sql = "DROP TABLE IF EXISTS Beszallitok";
-    $conn->query($sql);
-    $sql = "DROP TABLE IF EXISTS Term_szolg";
-    $conn->query($sql);
-    $sql = "DROP TABLE IF EXISTS Szamlak";
-    $conn->query($sql);
-    $sql = "DROP TABLE IF EXISTS Rendelesek";
-    $conn->query($sql);
-
     $sql = "CREATE TABLE IF NOT EXISTS Vevok(";
     $sql .= "VevoID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "nev VARCHAR(50),";
@@ -126,7 +115,7 @@
         echo $th->error_get_last;
     }
 
-    $sql = "CREATE PROCEDURE `Naplozas`(IN `inpmuvelet` VARCHAR(50), IN `inptabla` VARCHAR(50), IN `inpValtozasKomment` VARCHAR(255)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `naplo`(`Muvelet`, `Tabla`,`ValtozasKomment`) VALUES (inpmuvelet,inpTabla,inpValtozasKomment); END";
+    $sql = "CREATE PROCEDURE IF NOT EXISTS `Naplozas`(IN `inpmuvelet` VARCHAR(50), IN `inptabla` VARCHAR(50), IN `inpValtozasKomment` VARCHAR(255)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `naplo`(`Muvelet`, `Tabla`,`ValtozasKomment`) VALUES (inpmuvelet,inpTabla,inpValtozasKomment); END";
 
     try {
         $conn->query($sql);
@@ -136,35 +125,35 @@
         echo $th->error_get_last;
     }
 
-    $sql = "DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON vevok FOR EACH ROW BEGIN CALL Naplozas('Insert','vevok',concat('New_Vevo_ID', '_', NEW.VevoID)); END$$ DELIMITER ;";
+    // $sql = "DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON vevok FOR EACH ROW BEGIN CALL Naplozas('Insert','vevok',concat('New_Vevo_ID', '_', NEW.VevoID)); END$$ DELIMITER ;";
 
-    try {
-        $conn->query($sql);
-        echo '<br>';
-        echo 'Trigger after_user_insert letrehozva';
-    } catch (Excepreion $th) {
-        echo $th->error_get_last;
-    }
+    // try {
+    //     $conn->query($sql);
+    //     echo '<br>';
+    //     echo 'Trigger after_user_insert letrehozva';
+    // } catch (Excepreion $th) {
+    //     echo $th->error_get_last;
+    // }
 
-    $sql = "DELIMITER $$ CREATE TRIGGER after_user_delete AFTER DELETE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Delete','vevok',concat('Deleted_Vevo_ID', '_', OLD.VevoID)); END$$ DELIMITER ;";
+    // $sql = "DELIMITER $$ CREATE TRIGGER after_user_delete AFTER DELETE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Delete','vevok',concat('Deleted_Vevo_ID', '_', OLD.VevoID)); END$$ DELIMITER ;";
 
-    try {
-        $conn->query($sql);
-        echo '<br>';
-        echo 'Trigger after_user_delete letrehozva';
-    } catch (Excepreion $th) {
-        echo $th->error_get_last;
-    }
+    // try {
+    //     $conn->query($sql);
+    //     echo '<br>';
+    //     echo 'Trigger after_user_delete letrehozva';
+    // } catch (Excepreion $th) {
+    //     echo $th->error_get_last;
+    // }
 
-    $sql = "DELIMITER $$ CREATE TRIGGER after_user_update AFTER UPDATE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Update','vevok', concat('Old_New_Update_params_', 'OLD: ', OLD.VevoID, ', ', OLD.nev,', ', OLD.email,', ', OLD.telefon,', ',OLD.cim,' NEW: ',NEW.VevoID, ', ', NEW.nev,', ', NEW.email,', ', NEW.telefon,', ',NEW.cim)); END$$ DELIMITER ;";
+    // $sql = "DELIMITER $$ CREATE TRIGGER after_user_update AFTER UPDATE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Update','vevok', concat('Old_New_Update_params_', 'OLD: ', OLD.VevoID, ', ', OLD.nev,', ', OLD.email,', ', OLD.telefon,', ',OLD.cim,' NEW: ',NEW.VevoID, ', ', NEW.nev,', ', NEW.email,', ', NEW.telefon,', ',NEW.cim)); END$$ DELIMITER ;";
 
-    try {
-        $conn->query($sql);
-        echo '<br>';
-        echo 'Trigger after_user_update letrehozva';
-    } catch (Excepreion $th) {
-        echo $th->error_get_last;
-    }
+    // try {
+    //     $conn->query($sql);
+    //     echo '<br>';
+    //     echo 'Trigger after_user_update letrehozva';
+    // } catch (Excepreion $th) {
+    //     echo $th->error_get_last;
+    // }
 
     $conn->close();
     echo '<br>';
