@@ -115,7 +115,8 @@
     $sql .= "NaploID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "Muvelet VARCHAR(50),";
     $sql .= "Datum TIMESTAMP,";
-    $sql .= "Tabla VARCHAR(50))";
+    $sql .= "Tabla VARCHAR(50),";
+    $sql .= "ValtozasKomment VARCHAR(255))";
 
     try {
         $conn->query($sql);
@@ -125,7 +126,7 @@
         echo $th->error_get_last;
     }
 
-    $sql = "CREATE PROCEDURE `Naplozas`(IN `inpmuvelet` VARCHAR(50), IN `inptabla` VARCHAR(50)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `naplo`(`Muvelet`, `Tabla`) VALUES (inpmuvelet,inpTabla); END";
+    $sql = "CREATE PROCEDURE `Naplozas`(IN `inpmuvelet` VARCHAR(50), IN `inptabla` VARCHAR(50), IN `inpValtozasKomment` VARCHAR(255)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `naplo`(`Muvelet`, `Tabla`,`ValtozasKomment`) VALUES (inpmuvelet,inpTabla,inpValtozasKomment); END";
 
     try {
         $conn->query($sql);
@@ -135,12 +136,32 @@
         echo $th->error_get_last;
     }
 
-    $sql = "DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON vevok FOR EACH ROW BEGIN CALL Naplozas('Insert','vevok',NOW()); END$$ DELIMITER ;";
+    $sql = "DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON vevok FOR EACH ROW BEGIN CALL Naplozas('Insert','vevok',concat('New_Vevo_ID', '_', NEW.VevoID)); END$$ DELIMITER ;";
 
     try {
         $conn->query($sql);
         echo '<br>';
-        echo 'PROCEDURE Naplozas letrehozva';
+        echo 'Trigger after_user_insert letrehozva';
+    } catch (Excepreion $th) {
+        echo $th->error_get_last;
+    }
+
+    $sql = "DELIMITER $$ CREATE TRIGGER after_user_delete AFTER DELETE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Delete','vevok',concat('Deleted_Vevo_ID', '_', OLD.VevoID)); END$$ DELIMITER ;";
+
+    try {
+        $conn->query($sql);
+        echo '<br>';
+        echo 'Trigger after_user_delete letrehozva';
+    } catch (Excepreion $th) {
+        echo $th->error_get_last;
+    }
+
+    $sql = "DELIMITER $$ CREATE TRIGGER after_user_update AFTER UPDATE ON vevok FOR EACH ROW BEGIN CALL Naplozas('Update','vevok', concat('Old_New_Update_params_', 'OLD: ', OLD.VevoID, ', ', OLD.nev,', ', OLD.email,', ', OLD.telefon,', ',OLD.cim,' NEW: ',NEW.VevoID, ', ', NEW.nev,', ', NEW.email,', ', NEW.telefon,', ',NEW.cim)); END$$ DELIMITER ;";
+
+    try {
+        $conn->query($sql);
+        echo '<br>';
+        echo 'Trigger after_user_update letrehozva';
     } catch (Excepreion $th) {
         echo $th->error_get_last;
     }
