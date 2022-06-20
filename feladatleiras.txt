@@ -1,0 +1,55 @@
+Internetes alk. fejl. 2 beadandó
+
+Készletnyilvántartás
+
+
+Táblák
+	termékek, szolgáltatások (egy tábla!)
+	vevők
+	beszállítók
+	bevételezés
+	számla (termék esetén csökken a készlet, szolgáltatás esetén nem)
+
+Funkciók (törlés sehol nem lehet lehetséges, ha élő adata van hozzá kapcsolódva)
+	beszállítók felvitel/módosítás/törlés
+	vevők felvitel/módosítás/törlés
+	termékek/szolgáltatások felvitel/módosítás törlés
+	bevételezés
+	számlázás
+
+Feladatok
+	Táblatervek
+	Funkciók megvalósítása
+	Lekérdezések
+	készletlista
+	vevők listája (forgalommal)
+	beszállítók listája (forgalommal)
+	számlalista
+
+A módosításokat naplózni kell
+
+Plusz pontok járnak az alábbiakért
+	AJAX megoldás
+	Változásnapló triggerrel megoldva
+	CSS
+
+Nem fogadok el a netről letöltött megoldást
+Nyilvánvalóan egyes részmegoldások (pl. hogyan kell kapcsolódni az adatbázishoz) a netről fognak származni, 
+de komplett megoldás letöltése és beadása (kis módosítás esetén is) nem elfogadható.
+Ha több embernek szemmel láthatóan azonos a megoldása, az első beadást fogadom el eredetinek.
+
+
+
+A feladat kéréséhez meg kell adni a Neptun kódot (csupa nagybetűvel), a nevet és az email címet.
+
+Az ELKÜLDÉS gombra nyomva megjelenik a feladat, amelyet le kell menteni, mert csak egyszer kérhető le.
+
+A feladat lekérését naplózom, időponttal.
+
+A beadás és bemutatás határideje a szorgalmi időszak utolsó napján éjfél.
+
+A feladatot saját gépen, XAMPP vagy hasonló felületen kell elkészíteni, és amint kész, 
+a https://igazsagugyi-szakerto.appointlet.com/s/gdf-beadando-feladat-bemutatasa linken lehet időpontot kérni a bemutatására.
+
+Kérdés, probléma esetén a https://igazsagugyi-szakerto.appointlet.com/s/gdf-fogadoora-idopontfoglalas 
+linken lehet időpontot foglalni a probléma megbeszélésére és megoldására.
